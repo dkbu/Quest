@@ -7,6 +7,7 @@ yarn-error.log*
 # Package files
 *.tgz
 *.tar.gz
+package-lock.json
 
 # Build output
 dist/
