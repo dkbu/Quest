@@ -1,20 +1,18 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
+/* Quest Task Manager Widget Styles */
+.qtm-container {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;
     color: #333;
     line-height: 1.6;
-}
-
-.container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
+}
+
+.qtm-container *,
+.qtm-container *::before,
+.qtm-container *::after {
+    box-sizing: border-box;
 }
 
 header {
@@ -38,14 +36,15 @@ header h1 {
     gap: 20px;
 }
 
-section {
+.qtm-container section {
     background: white;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-h2 {
+.qtm-container h2 {
     margin-bottom: 20px;
     color: #555;
     border-bottom: 2px solid #eee;
@@ -53,7 +52,7 @@ h2 {
 }
 
 /* Form Styling */
-.form-group {
+.qtm-form-group {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -61,13 +60,14 @@ h2 {
     margin-bottom: 15px;
 }
 
-label {
+.qtm-container label {
     font-weight: 600;
     min-width: 120px;
     color: #555;
 }
 
-input, select {
+.qtm-container input, 
+.qtm-container select {
     flex: 1;
     min-width: 200px;
     padding: 12px;
@@ -77,13 +77,14 @@ input, select {
     transition: border-color 0.3s ease;
 }
 
-input:focus, select:focus {
+.qtm-container input:focus, 
+.qtm-container select:focus {
     outline: none;
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-button {
+.qtm-button {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
@@ -95,31 +96,31 @@ button {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-button:hover {
+.qtm-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-button:active {
+.qtm-button:active {
     transform: translateY(0);
 }
 
 /* Save/Load Section */
-.save-load-section {
+.qtm-save-load-section {
     text-align: center;
 }
 
-.save-load-section button {
+.qtm-save-load-section .qtm-button {
     margin: 0 10px;
     background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
 }
 
-.save-load-section button:first-child {
+.qtm-save-load-section .qtm-button:first-child {
     background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
 }
 
 /* Quest Display */
-.quest-item {
+.qtm-quest-item {
     background: #f9f9f9;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -128,25 +129,27 @@ button:active {
     transition: transform 0.2s ease;
 }
 
-.quest-item:hover {
+.qtm-quest-item:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.quest-header {
+.qtm-quest-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.quest-name {
+.qtm-quest-name {
     font-size: 1.4rem;
     font-weight: 600;
     color: #333;
 }
 
-.quest-stats {
+.qtm-quest-stats {
     font-size: 0.9rem;
     color: #666;
     background: #e8e8e8;
@@ -154,7 +157,7 @@ button:active {
     border-radius: 20px;
 }
 
-.progress-bar-container {
+.qtm-progress-bar-container {
     background: #e0e0e0;
     border-radius: 20px;
     overflow: hidden;
@@ -162,7 +165,7 @@ button:active {
     margin-bottom: 10px;
 }
 
-.progress-bar {
+.qtm-progress-bar {
     height: 100%;
     transition: width 0.5s ease;
     display: flex;
@@ -172,6 +175,7 @@ button:active {
     font-weight: 600;
     font-size: 12px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 /* Quest Colors */
@@ -185,7 +189,7 @@ button:active {
 .quest-color-7 { background: linear-gradient(135deg, #87CEEB, #03A9F4); }
 
 /* Tasks Display */
-.task-item {
+.qtm-task-item {
     background: #f9f9f9;
     border-left: 4px solid #ddd;
     padding: 15px;
@@ -194,108 +198,123 @@ button:active {
     transition: all 0.3s ease;
 }
 
-.task-item.completed {
+.qtm-task-item.completed {
     background: #e8f5e8;
     border-left-color: #4CAF50;
     opacity: 0.8;
 }
 
-.task-item:hover {
+.qtm-task-item:hover {
     transform: translateX(5px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.task-header {
+.qtm-task-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.task-name {
+.qtm-task-name {
     font-weight: 600;
     color: #333;
     flex: 1;
+    min-width: 200px;
 }
 
-.task-name.completed {
+.qtm-task-name.completed {
     text-decoration: line-through;
     color: #888;
 }
 
-.task-controls {
+.qtm-task-controls {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
-.task-controls button {
+.qtm-task-controls .qtm-button {
     padding: 6px 12px;
     font-size: 12px;
     min-width: auto;
 }
 
-.complete-btn {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
+.qtm-complete-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049) !important;
 }
 
-.delete-btn {
-    background: linear-gradient(135deg, #f44336, #d32f2f);
+.qtm-delete-btn {
+    background: linear-gradient(135deg, #f44336, #d32f2f) !important;
 }
 
-.task-details {
+.qtm-task-details {
     font-size: 0.9rem;
     color: #666;
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
-.task-deadline {
+.qtm-task-deadline {
     font-weight: 500;
 }
 
-.task-quest {
+.qtm-task-deadline.overdue {
+    color: #d32f2f;
+    font-weight: 600;
+}
+
+.qtm-task-quest {
     font-style: italic;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .container {
+    .qtm-container {
         padding: 10px;
     }
     
-    header h1 {
-        font-size: 2rem;
+    .qtm-container h2 {
+        font-size: 1.5rem;
     }
     
-    .form-group {
+    .qtm-form-group {
         flex-direction: column;
         align-items: stretch;
     }
     
-    label {
+    .qtm-container label {
         min-width: auto;
         margin-bottom: 5px;
     }
     
-    .quest-header {
+    .qtm-quest-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
     
-    .task-header {
+    .qtm-task-header {
         flex-direction: column;
         align-items: stretch;
         gap: 10px;
     }
     
-    .task-controls {
+    .qtm-task-controls {
         justify-content: flex-end;
+    }
+    
+    .qtm-task-details {
+        flex-direction: column;
+        gap: 5px;
     }
 }
 
 /* Animations */
-@keyframes slideIn {
+@keyframes qtmSlideIn {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -306,25 +325,26 @@ button:active {
     }
 }
 
-.quest-item, .task-item {
-    animation: slideIn 0.3s ease;
+.qtm-quest-item, 
+.qtm-task-item {
+    animation: qtmSlideIn 0.3s ease;
 }
 
 /* Success/Error Messages */
-.message {
+.qtm-message {
     padding: 15px;
     border-radius: 6px;
     margin-bottom: 20px;
     font-weight: 500;
 }
 
-.success {
+.qtm-message.success {
     background: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
 }
 
-.error {
+.qtm-message.error {
     background: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest Task Manager - Package Demo</title>
+    <link rel="stylesheet" href="styles/quest-task-manager.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin: 0;
+        }
+        
+        .demo-header p {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-header">
+        <h1>Quest Task Manager</h1>
+        <p>Reusable Package Demo</p>
+    </div>
+
+    <div id="quest-manager-widget"></div>
+
+    <script src="src/quest-task-manager.js"></script>
+    <script>
+        // Initialize the Quest Task Manager widget
+        const questManager = new QuestTaskManager({
+            enableSave: true,
+            enableLoad: true,
+            autoSave: true,
+            showQuestColors: true,
+            showDeadlines: true,
+            showOverdueWarnings: true,
+            // Callbacks for integration
+            onQuestAdded: (quest) => {
+                console.log('Quest added:', quest);
+            },
+            onTaskAdded: (task) => {
+                console.log('Task added:', task);
+            },
+            onTaskCompleted: (task) => {
+                console.log('Task completed:', task);
+            },
+            onDataSaved: (data) => {
+                console.log('Data saved:', data);
+            },
+            onDataLoaded: (data) => {
+                console.log('Data loaded:', data);
+            }
+        });
+
+        // Initialize in the widget container
+        questManager.init('#quest-manager-widget');
+        
+        // Make it globally available for demo purposes
+        window.questManager = questManager;
+        
+        // Demo: Add some sample data programmatically
+        setTimeout(() => {
+            console.log('Adding sample data...');
+            const quest1 = questManager.addQuestProgrammatically('Complete Project');
+            const quest2 = questManager.addQuestProgrammatically('Learn JavaScript');
+            
+            questManager.addTaskProgrammatically('Setup development environment', quest1.id, '2026-02-10');
+            questManager.addTaskProgrammatically('Write documentation', quest1.id, '2026-02-15');
+            questManager.addTaskProgrammatically('Study ES6 features', quest2.id, '2026-02-12');
+        }, 1000);
+    </script>
+</body>
+</html>
