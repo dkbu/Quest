@@ -145,6 +145,33 @@ class QuestTaskManager {
             this.addTask();
         });
 
+        // Dynamic button event delegation
+        this.container.addEventListener('click', (e) => {
+            // Handle quest deletion buttons
+            if (e.target.classList.contains('qtm-delete-quest-btn')) {
+                const questId = e.target.getAttribute('data-quest-id');
+                if (questId) {
+                    this.deleteQuest(questId);
+                }
+            }
+            
+            // Handle task completion toggle buttons
+            if (e.target.classList.contains('qtm-toggle-task-btn')) {
+                const taskId = e.target.getAttribute('data-task-id');
+                if (taskId) {
+                    this.toggleTaskCompletion(taskId);
+                }
+            }
+            
+            // Handle task deletion buttons
+            if (e.target.classList.contains('qtm-delete-task-btn')) {
+                const taskId = e.target.getAttribute('data-task-id');
+                if (taskId) {
+                    this.deleteTask(taskId);
+                }
+            }
+        });
+
         // Save and Load buttons (if enabled)
         if (this.config.enableSave) {
             const saveBtn = this.container.querySelector('#qtm-save-btn');
@@ -352,7 +379,7 @@ class QuestTaskManager {
                 <div class="qtm-quest-header">
                     <div class="qtm-quest-name">${this.escapeHtml(quest.name)}</div>
                     <div class="qtm-quest-stats">${completedTasks.length}/${questTasks.length} tasks completed</div>
-                    <button class="qtm-delete-btn" onclick="window.questManager.deleteQuest('${quest.id}')">Delete Quest</button>
+                    <button class="qtm-delete-btn" data-quest-id="${quest.id}" class="qtm-delete-quest-btn">Delete Quest</button>
                 </div>
                 <div class="qtm-progress-bar-container">
                     <div class="${this.config.cssClasses.progressBar} qtm-progress-bar ${this.config.showQuestColors ? quest.colorClass : ''}" style="width: ${completionPercentage}%">
@@ -392,10 +419,10 @@ class QuestTaskManager {
                 <div class="qtm-task-header">
                     <div class="qtm-task-name ${task.completed ? 'completed' : ''}">${this.escapeHtml(task.name)}</div>
                     <div class="qtm-task-controls">
-                        <button class="qtm-complete-btn" onclick="window.questManager.toggleTaskCompletion('${task.id}')">
+                        <button class="qtm-complete-btn" data-task-id="${task.id}" class="qtm-toggle-task-btn">
                             ${task.completed ? 'Mark Incomplete' : 'Mark Complete'}
                         </button>
-                        <button class="qtm-delete-btn" onclick="window.questManager.deleteTask('${task.id}')">Delete</button>
+                        <button class="qtm-delete-btn" data-task-id="${task.id}" class="qtm-delete-task-btn">Delete</button>
                     </div>
                 </div>
                 <div class="qtm-task-details">
@@ -597,8 +624,14 @@ class QuestTaskManager {
 // Export for different module systems
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = QuestTaskManager;
+    module.exports.default = QuestTaskManager; // Add default export for webpack
 } else if (typeof define === 'function' && define.amd) {
     define(() => QuestTaskManager);
-} else {
+} else if (typeof window !== 'undefined') {
     window.QuestTaskManager = QuestTaskManager;
+}
+
+// ES6 default export for modern bundlers
+if (typeof exports === 'object') {
+    exports.default = QuestTaskManager;
 }
