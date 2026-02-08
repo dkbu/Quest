@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest & Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Quest & Task Manager</h1>
+        </header>
+
+        <div class="main-content">
+            <!-- Quest Creation Section -->
+            <section class="quest-section">
+                <h2>Add New Quest</h2>
+                <form id="quest-form">
+                    <div class="form-group">
+                        <label for="quest-name">Quest Name:</label>
+                        <input type="text" id="quest-name" required>
+                        <button type="submit">Add Quest</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Task Creation Section -->
+            <section class="task-section">
+                <h2>Add New Task</h2>
+                <form id="task-form">
+                    <div class="form-group">
+                        <label for="task-name">Task Name:</label>
+                        <input type="text" id="task-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-deadline">Deadline:</label>
+                        <input type="date" id="task-deadline" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-quest">Quest:</label>
+                        <select id="task-quest" required>
+                            <option value="">Select a quest...</option>
+                        </select>
+                    </div>
+                    <button type="submit">Add Task</button>
+                </form>
+            </section>
+
+            <!-- Save/Load Section -->
+            <section class="save-load-section">
+                <button id="save-btn">Save Data</button>
+                <button id="load-btn">Load Data</button>
+            </section>
+
+            <!-- Quest Display Section -->
+            <section class="quests-display">
+                <h2>Quests Overview</h2>
+                <div id="quests-container">
+                    <!-- Quests will be dynamically rendered here -->
+                </div>
+            </section>
+
+            <!-- Tasks List Section -->
+            <section class="tasks-display">
+                <h2>All Tasks</h2>
+                <div id="tasks-container">
+                    <!-- Tasks will be dynamically rendered here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
