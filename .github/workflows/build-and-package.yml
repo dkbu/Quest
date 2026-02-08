@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write
+  releases: write
+  actions: write
+
 jobs:
   build-and-package:
     runs-on: ubuntu-latest
@@ -48,12 +53,16 @@ jobs:
         
     - name: Create Release (on main branch only)
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.package-info.outputs.package-version }}
-        name: Release v${{ steps.package-info.outputs.package-version }}
+        tag_name: v${{ steps.package-info.outputs.package-version }}-${{ github.run_number }}
+        name: Release v${{ steps.package-info.outputs.package-version }} (Build ${{ github.run_number }})
         body: |
           Automated release of Quest Task Manager v${{ steps.package-info.outputs.package-version }}
+          Build: ${{ github.run_number }}
+          Commit: ${{ github.sha }}
           
           ## Installation
           ```bash
@@ -73,3 +82,5 @@ jobs:
         files: ${{ steps.package-info.outputs.tarball-name }}
         draft: false
         prerelease: false
+        fail_on_unmatched_files: true
+        generate_release_notes: true
