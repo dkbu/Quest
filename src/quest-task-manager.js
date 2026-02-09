@@ -151,7 +151,16 @@ class QuestTaskManager {
             if (e.target.classList.contains('qtm-delete-quest-btn')) {
                 const questId = e.target.getAttribute('data-quest-id');
                 if (questId) {
-                    this.deleteQuest(questId);
+                    const quest = this.quests.find(q => q.id === questId);
+                    const questName = quest ? quest.name : 'this quest';
+                    const tasksCount = this.tasks.filter(t => t.questId === questId).length;
+                    const message = tasksCount > 0 
+                        ? `Are you sure you want to delete "${questName}" and all ${tasksCount} associated task(s)? This action cannot be undone.`
+                        : `Are you sure you want to delete "${questName}"? This action cannot be undone.`;
+                    
+                    if (confirm(message)) {
+                        this.deleteQuest(questId);
+                    }
                 }
             }
             
@@ -167,7 +176,13 @@ class QuestTaskManager {
             if (e.target.classList.contains('qtm-delete-task-btn')) {
                 const taskId = e.target.getAttribute('data-task-id');
                 if (taskId) {
-                    this.deleteTask(taskId);
+                    const task = this.tasks.find(t => t.id === taskId);
+                    const taskName = task ? task.name : 'this task';
+                    const message = `Are you sure you want to delete "${taskName}"?`;
+                    
+                    if (confirm(message)) {
+                        this.deleteTask(taskId);
+                    }
                 }
             }
         });
@@ -312,6 +327,9 @@ class QuestTaskManager {
         const taskIndex = this.tasks.findIndex(t => t.id === taskId);
         if (taskIndex !== -1) {
             const taskName = this.tasks[taskIndex].name;
+
+            
+
             this.tasks.splice(taskIndex, 1);
             this.renderAll();
             this.showMessage(`Task "${taskName}" deleted`, 'success');
@@ -379,7 +397,7 @@ class QuestTaskManager {
                 <div class="qtm-quest-header">
                     <div class="qtm-quest-name">${this.escapeHtml(quest.name)}</div>
                     <div class="qtm-quest-stats">${completedTasks.length}/${questTasks.length} tasks completed</div>
-                    <button class="qtm-delete-btn" data-quest-id="${quest.id}" class="qtm-delete-quest-btn">Delete Quest</button>
+                    <button data-quest-id="${quest.id}" class="qtm-delete-quest-btn">Delete Quest</button>
                 </div>
                 <div class="qtm-progress-bar-container">
                     <div class="${this.config.cssClasses.progressBar} qtm-progress-bar ${this.config.showQuestColors ? quest.colorClass : ''}" style="width: ${completionPercentage}%">
@@ -419,10 +437,10 @@ class QuestTaskManager {
                 <div class="qtm-task-header">
                     <div class="qtm-task-name ${task.completed ? 'completed' : ''}">${this.escapeHtml(task.name)}</div>
                     <div class="qtm-task-controls">
-                        <button class="qtm-complete-btn" data-task-id="${task.id}" class="qtm-toggle-task-btn">
+                        <button data-task-id="${task.id}" class="qtm-toggle-task-btn">
                             ${task.completed ? 'Mark Incomplete' : 'Mark Complete'}
                         </button>
-                        <button class="qtm-delete-btn" data-task-id="${task.id}" class="qtm-delete-task-btn">Delete</button>
+                        <button data-task-id="${task.id}" class="qtm-delete-task-btn">Delete</button>
                     </div>
                 </div>
                 <div class="qtm-task-details">

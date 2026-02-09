@@ -242,11 +242,15 @@ header h1 {
     min-width: auto;
 }
 
-.qtm-complete-btn {
+.qtm-toggle-task-btn {
     background: linear-gradient(135deg, #4CAF50, #45a049) !important;
 }
 
-.qtm-delete-btn {
+.qtm-delete-task-btn {
+    background: linear-gradient(135deg, #f44336, #d32f2f) !important;
+}
+
+.qtm-delete-quest-btn {
     background: linear-gradient(135deg, #f44336, #d32f2f) !important;
 }
 
